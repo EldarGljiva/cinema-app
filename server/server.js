@@ -1,8 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
-//from other folders/files
+// rom other folders/files
 import app from "./app.js";
 
+// port
 const port = process.env.PORT;
 
 app.listen(port, () => {
