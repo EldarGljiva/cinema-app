@@ -96,7 +96,7 @@ export const login = async (req, res, next) => {
   try {
     existingUser = await User.findOne({ email: email });
   } catch (err) {
-    return next(err);
+    console.log(err);
   }
   if (!existingUser) {
     return res

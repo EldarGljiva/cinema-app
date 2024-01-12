@@ -5,6 +5,7 @@ dotenv.config();
 import cors from "cors";
 // from other folders/files
 import userRoute from "./routes/user-routes.js";
+import adminRoute from "./routes/admin-routes.js";
 
 const app = express();
 
@@ -16,7 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 // routes
-app.use("/api", userRoute);
+app.use("/api/user", userRoute);
+app.use("/api/admin", adminRoute);
 
 app.get("/", async (req, res) => {
   res.send("Hello there");
