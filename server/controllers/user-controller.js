@@ -1,5 +1,6 @@
 //from other folders/files
 import User from "../models/User.js";
+import Booking from "../models/Booking.js";
 import bcrypt from "bcryptjs";
 
 export const getAllUsers = async (req, res, next) => {
@@ -110,4 +111,20 @@ export const login = async (req, res, next) => {
   }
 
   return res.status(200).json({ message: "Login Succesfull" });
+};
+
+export const getBookingsOfUser = async (req, res, next) => {
+  const id = req.params.id;
+  let bookings;
+
+  try {
+    bookings = await Booking.find({ user: id });
+  } catch (err) {
+    return console.log(err);
+  }
+  if (!bookings) {
+    return res.status(404).json({ message: "No bookings found for the user" });
+  }
+
+  return res.status(200).json({ bookings });
 };

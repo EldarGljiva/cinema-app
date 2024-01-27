@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
-// from other folders/files
+// From other folders/files
 import userRoute from "./routes/user-routes.js";
 import adminRoute from "./routes/admin-routes.js";
 import movieRoute from "./routes/movie-routes.js";
@@ -11,14 +11,14 @@ import bookingRoute from "./routes/booking-routes.js";
 
 const app = express();
 
-// enable cors
+// Enable cors
 app.use(cors());
 
-// middleware
+// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-// routes
+// Routes
 app.use("/api/user", userRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/movie", movieRoute);

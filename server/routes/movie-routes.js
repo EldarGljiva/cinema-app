@@ -4,10 +4,11 @@ import {
   getMovieById,
   getMovies,
 } from "../controllers/movie-controller.js";
-// from other folders/files
+// From other folders/files
 
 const router = express.Router();
 
+// Routes
 router.get("/", getMovies);
 router.get("/:id", getMovieById);
 router.post("/", addMovie);

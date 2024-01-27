@@ -14,7 +14,7 @@ const adminSchema = new mongoose.Schema({
     minLength: 6,
     required: true,
   },
-  addedMovies: [{ type: String }],
+  addedMovies: [{ type: mongoose.Types.ObjectId, ref: "Movie" }],
 });
 
 const Admin = mongoose.model("Admin", adminSchema);

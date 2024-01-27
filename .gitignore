@@ -1,1 +1,4 @@
 client
+node_modules
+projects
+mongodbdata

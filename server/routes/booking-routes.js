@@ -1,10 +1,16 @@
 import express from "express";
-// from other folders/files
-import { newBooking } from "../controllers/booking-controller.js";
+// From other folders/files
+import {
+  newBooking,
+  getBookingById,
+  deleteBooking,
+} from "../controllers/booking-controller.js";
 
 const router = express.Router();
 
-// routes
+// Routes
 router.post("/", newBooking);
+router.get("/:id", getBookingById);
+router.delete("/:id", deleteBooking);
 
 export default router;

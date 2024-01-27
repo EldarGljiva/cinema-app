@@ -5,7 +5,8 @@ import db from "../config/db.js";
 
 const bookingSchema = new mongoose.Schema({
   movie: {
-    type: String,
+    type: mongoose.Types.ObjectId,
+    ref: "Movie",
     required: true,
   },
   date: {
@@ -17,7 +18,8 @@ const bookingSchema = new mongoose.Schema({
     required: true,
   },
   user: {
-    type: String,
+    type: mongoose.Types.ObjectId,
+    ref: "User",
     required: true,
   },
 });

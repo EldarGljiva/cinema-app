@@ -1,7 +1,10 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import Movie from "../models/Movie.js";
 dotenv.config();
+import mongoose from "mongoose";
+// From other Folders/Files
+import Movie from "../models/Movie.js";
+import Admin from "../models/Admin.js";
 
 export const addMovie = async (req, res, next) => {
   const extractedToken = req.headers.authorization.split(" ")[1]; // Bearer token
@@ -11,7 +14,7 @@ export const addMovie = async (req, res, next) => {
 
   let adminId;
 
-  // verify token
+  // Verify token
   jwt.verify(extractedToken, process.env.SECRET_KEY, (err, decrypted) => {
     if (err) {
       return res.status(400).json({ message: `${err.message}` });
@@ -21,7 +24,7 @@ export const addMovie = async (req, res, next) => {
     }
   });
 
-  // create new movie
+  // Create new movie
   const { title, description, releaseDate, posterUrl, featured } = req.body;
   if (
     !title &&
@@ -44,7 +47,13 @@ export const addMovie = async (req, res, next) => {
       admin: adminId,
       posterUrl,
     });
-    movie = await movie.save();
+    const session = await mongoose.startSession();
+    const adminUser = await Admin.findById(adminId);
+    session.startTransaction();
+    await movie.save({ session });
+    adminUser.addedMovies.push(movie);
+    await adminUser.save({ session });
+    await session.commitTransaction();
   } catch (err) {
     console.log(err);
   }

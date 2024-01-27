@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
-import dotenv from "dotenv";
-dotenv.config();
 
+// Connect to Replica Set
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(
+    "mongodb://DESKTOP-IUCD566:27017,DESKTOP-IUCD566:27018,DESKTOP-IUCD566:27019/yourDatabaseName?replicaSet=rs"
+  )
   .then(() => {
     console.log("Database connected succesfully");
   })
