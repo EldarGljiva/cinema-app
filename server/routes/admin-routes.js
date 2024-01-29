@@ -9,7 +9,7 @@ import {
 const router = express.Router();
 
 // Routes
-router.post("/signup", addAdmin);
+router.post("/register", addAdmin);
 router.post("/login", adminLogin);
 router.get("/", getAdmins);
 

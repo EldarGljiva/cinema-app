@@ -2,7 +2,7 @@ import express from "express";
 // From other folders/files
 import {
   getAllUsers,
-  signup,
+  register,
   updateUser,
   deleteUser,
   login,
@@ -13,7 +13,7 @@ const router = express.Router();
 
 // Routes
 router.get("/users", getAllUsers);
-router.post("/signup", signup);
+router.post("/register", register);
 router.put("/user/:id", updateUser);
 router.delete("/user/:id", deleteUser);
 router.post("/login", login);

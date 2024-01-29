@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 // From other folders/files
 import Admin from "../models/Admin.js";
+
 // Controller function to add a new admin
 export const addAdmin = async (req, res, next) => {
   const { email, password } = req.body;

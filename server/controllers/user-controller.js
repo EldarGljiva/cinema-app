@@ -17,30 +17,35 @@ export const getAllUsers = async (req, res, next) => {
   return res.status(200).json({ users });
 };
 
-export const signup = async (req, res, next) => {
+export const register = async (req, res, next) => {
   const { name, email, password } = req.body;
-  if (
-    !name &&
-    name.trim() === "" &&
-    !email &&
-    email.trim() === "" &&
-    !password &&
-    password.trim() === ""
-  ) {
+
+  if (!name.trim() || !email.trim() || !password.trim()) {
     return res.status(422).json({ message: "Invalid Inputs" });
   }
-  const hashedPassword = bcrypt.hashSync(password);
-  let user;
+
   try {
-    user = new User({ name, email, password: hashedPassword });
-    user = user.save();
+    // Check if the user with the given email already exists
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+      return res.status(409).json({ message: "Email already in use" });
+    }
+
+    const hashedPassword = bcrypt.hashSync(password);
+
+    // Create and save the new user
+    const newUser = new User({ name, email, password: hashedPassword });
+    const savedUser = await newUser.save();
+
+    if (!savedUser) {
+      return res.status(500).json({ message: "Unexpected Error Occurred" });
+    }
+
+    return res.status(201).json({ id: savedUser._id });
   } catch (err) {
     return next(err);
   }
-  if (!user) {
-    return res.status(500).json({ message: "Unexpected Error Occured" });
-  }
-  return res.status(201).json({ user });
 };
 
 export const updateUser = async (req, res, next) => {
