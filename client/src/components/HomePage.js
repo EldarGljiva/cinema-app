@@ -40,7 +40,7 @@ const HomePage = () => {
               .slice(0, 4)
               .map((movie, index) => (
                 <MovieItem
-                  id={movie.id}
+                  id={movie._id}
                   title={movie.title}
                   posterUrl={movie.posterUrl}
                   releaseDate={movie.releaseDate}
@@ -56,7 +56,6 @@ const HomePage = () => {
           variant="outlined"
           sx={{ margin: "auto", color: "#2b2d42" }}
         >
-          {" "}
           View all movies
         </Button>
       </Box>

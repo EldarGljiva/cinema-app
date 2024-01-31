@@ -62,7 +62,7 @@ export const newBooking = async (req, res, next) => {
     return res.status(500).json({ message: "Unable to create a booking" });
   }
 
-  return res.status(201).json({ booking });
+  return res.status(201).json({ booking, movieName: existingMovie.name });
 };
 
 // Controller function to get a booking by its ID
@@ -71,13 +71,16 @@ export const getBookingById = async (req, res, next) => {
   let booking;
   try {
     // Find the booking with the provided ID
-    booking = await Booking.findById(id);
+    booking = await Booking.findOne({ user: id });
   } catch (err) {
-    return console.log(err);
-  }
-  if (!booking) {
+    console.error(err);
     return res.status(500).json({ message: "Unexpected Error" });
   }
+
+  if (!booking) {
+    return res.status(404).json({ message: "Booking not found" });
+  }
+
   return res.status(200).json({ booking });
 };
 

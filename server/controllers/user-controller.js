@@ -105,9 +105,7 @@ export const login = async (req, res, next) => {
     console.log(err);
   }
   if (!existingUser) {
-    return res
-      .status(404)
-      .json({ message: "Unable to find user from this ID" });
+    return res.status(404).json({ message: "Unable to find user" });
   }
 
   const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
@@ -115,7 +113,12 @@ export const login = async (req, res, next) => {
     return res.status(400).json({ message: "Password Incorrect" });
   }
 
-  return res.status(200).json({ message: "Login Succesfull" });
+  return res.status(200).json({
+    message: "Login Succesfull",
+    id: existingUser._id,
+    name: existingUser.name,
+    email: existingUser.email,
+  });
 };
 
 export const getBookingsOfUser = async (req, res, next) => {
@@ -123,13 +126,24 @@ export const getBookingsOfUser = async (req, res, next) => {
   let bookings;
 
   try {
-    bookings = await Booking.find({ user: id });
+    // Use populate to get additional details from the referenced Movie model
+    bookings = await Booking.find({ user: id }).populate("movie");
   } catch (err) {
     return console.log(err);
   }
+
   if (!bookings) {
     return res.status(404).json({ message: "No bookings found for the user" });
   }
 
-  return res.status(200).json({ bookings });
+  // Transform the bookings array to include movieName
+  const transformedBookings = bookings.map((booking) => ({
+    _id: booking._id,
+    date: booking.date,
+    seatNumber: booking.seatNumber,
+    user: booking.user,
+    movieName: booking.movie.title,
+  }));
+
+  return res.status(200).json({ bookings: transformedBookings });
 };
