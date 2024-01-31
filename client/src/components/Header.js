@@ -9,11 +9,12 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { getAllMovies } from "../api-helpers/api-helpers";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { adminActions, userActions } from "../store";
 
 const Header = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAdminLoggedIn = useSelector((state) => state.admin.isLoggedIn);
   const isUserLoggedIn = useSelector((state) => state.user.isLoggedIn);
@@ -29,11 +30,18 @@ const Header = () => {
   const logout = (isAdmin) => {
     dispatch(isAdmin ? adminActions.logout() : userActions.logout());
   };
+  const handleChange = (e, val) => {
+    const movie = movies.find((m) => m.title === val);
+    if (isUserLoggedIn) {
+      navigate(`/booking/${movie._id}`);
+    }
+  };
   return (
     <AppBar position="sticky" sx={{ bgcolor: "#232946" }}>
       <Toolbar>
         <Box width={"50%"} margin={"auto"} padding={2}>
           <Autocomplete
+            onChange={handleChange}
             id="free-solo-demo"
             freeSolo
             options={movies && movies.map((option) => option.title)}
@@ -74,8 +82,8 @@ const Header = () => {
             )}
             {isAdminLoggedIn && (
               <>
-                <Tab LinkComponent={Link} to="/add" label="Add Movie" />
-                <Tab LinkComponent={Link} to="/admin" label="Profile" />
+                <Tab LinkComponent={Link} to="/add_movie" label="Add Movie" />
+                <Tab LinkComponent={Link} to="/admin_profile" label="Profile" />
                 <Tab
                   onClick={() => logout(true)}
                   LinkComponent={Link}

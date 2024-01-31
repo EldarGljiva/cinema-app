@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { Link } from "react-router-dom";
 
 const AuthForm = ({ onSubmit, isAdmin }) => {
   // State to track whether it's a login or registration form
@@ -41,7 +42,7 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
   return (
     <Dialog PaperProps={{ style: { borderRadius: 20 } }} open={true}>
       <Box sx={{ ml: "auto", padding: 1 }}>
-        <IconButton>
+        <IconButton LinkComponent={Link} to="/">
           <CancelIcon />
         </IconButton>
       </Box>

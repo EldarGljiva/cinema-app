@@ -4,8 +4,10 @@ import AuthForm from "./AuthForm";
 import { sendUserAuthRequest } from "../../api-helpers/api-helpers";
 import { useDispatch } from "react-redux";
 import { userActions } from "../../store";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const onResReceived = (data) => {
     console.log("Response data:", data);
@@ -17,6 +19,7 @@ const Auth = () => {
       localStorage.setItem("userId", data.id);
       localStorage.setItem("userName", data.name);
       localStorage.setItem("userEmail", data.email);
+      navigate("/");
     } else {
       console.error("Invalid response structure. 'id' not found.");
     }

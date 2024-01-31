@@ -1,10 +1,12 @@
 import React from "react";
-import AuthForm from "../Auth/AuthForm";
+import AuthForm from "./AuthForm";
 import { sendAdminAuthRequest } from "../../api-helpers/api-helpers";
 import { useDispatch } from "react-redux";
 import { adminActions } from "../../store";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const onResReceived = (data) => {
     console.log("Response data:", data);
@@ -19,6 +21,7 @@ const Admin = () => {
       // Store 'id' and 'token' in local storage
       localStorage.setItem("adminId", data.id);
       localStorage.setItem("token", data.token);
+      navigate("/");
     } else {
       console.error("Invalid response structure. 'id' or 'token' not found.");
     }
