@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
-import { Typography, Button } from "@mui/material";
+import { Typography, Button, Slider } from "@mui/material";
 import MovieItem from "./Movies/MovieItem";
 import { Link } from "react-router-dom";
 import { getAllMovies } from "../api-helpers/api-helpers";
+import { Carousel } from "./Carousel.jsx";
+import slides from "./data/carouselData.json";
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
@@ -14,17 +16,24 @@ const HomePage = () => {
   }, []);
   console.log(movies);
   return (
-    <Box width={"100%"} height="100%" margin="auto" marginTop={2}>
-      <Box margin={"auto"} width="80%" height={"100%"} padding={2}>
-        <img
-          src="https://i.ytimg.com/vi/bweRG6WueuM/maxresdefault.jpg"
-          alt="Not defined yet"
-          width={"100%"}
-          height={"100%"}
-        ></img>
+    <Box
+      width={"100%"}
+      height="100%"
+      margin="auto"
+      sx={{ backgroundColor: "#232122" }}
+    >
+      <Box
+        display={"flex"}
+        justifyContent={"center"}
+        margin="auto"
+        width="100%"
+        height="100%"
+        padding={2}
+      >
+        <Carousel data={slides.slides}></Carousel>
       </Box>
       <Box padding={5} margin="auto">
-        <Typography variant="h4" textAlign={"center"}>
+        <Typography variant="h4" textAlign={"center"} color={"#e07b9c"}>
           Latest Release
         </Typography>
       </Box>
@@ -53,8 +62,13 @@ const HomePage = () => {
         <Button
           LinkComponent={Link}
           to="/movies"
-          variant="outlined"
-          sx={{ margin: "auto", color: "#2b2d42" }}
+          variant="contained"
+          sx={{
+            margin: "auto",
+            bgcolor: "#c91c55",
+            color: "#fff",
+            ":hover": { bgcolor: "#d62f66" },
+          }}
         >
           View all movies
         </Button>

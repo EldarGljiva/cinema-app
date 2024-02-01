@@ -35,7 +35,7 @@ const UserProfile = () => {
   return (
     <div>
       <Box width={"100%"} display="flex">
-        <Box width={"30%"} flexDirection="column">
+        <Box width={"30%"} flexDirection="column" padding={5}>
           <AccountCircleIcon sx={{ fontSize: "10rem" }} />
           <Box
             padding={1}

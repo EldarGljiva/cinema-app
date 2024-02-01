@@ -12,9 +12,9 @@ const MovieItem = ({ title, releaseDate, posterUrl, id }) => {
       sx={{
         margin: 2,
         width: 190,
-        height: 350,
+        height: 500,
         borderRadius: 5,
-        ":hover": { boxShadow: "10px 10px 20px #ccc" },
+        ":hover": { boxShadow: "10px 10px 20px #000000" },
       }}
     >
       <img src={posterUrl} alt={title} height={"50%"} width="100%" />

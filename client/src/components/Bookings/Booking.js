@@ -39,7 +39,7 @@ const Booking = () => {
   // If id changes run useEffect
   console.log(movie);
   return (
-    <div>
+    <div style={{ backgroundColor: "#232122" }}>
       {movie && (
         <Fragment>
           <Typography
@@ -47,6 +47,7 @@ const Booking = () => {
             fontFamily="fanatasy"
             variant="h4"
             textAlign="center"
+            color={"#c91c55"}
           >
             Book Tickets of Movie: {movie.title}
           </Typography>
@@ -58,17 +59,17 @@ const Booking = () => {
               paddingTop={3}
               width={"50%"}
               marginRight={"auto"}
+              marginLeft={"20px"}
             >
               <img
                 width="80%"
-                height={"300px"}
+                height={"500px"}
                 src={movie.posterUrl}
                 alt={movie.title}
               />
               <Box width={"80%"} marginTop={3} padding={2}>
-                <Typography paddingTop={2}>{movie.description}</Typography>
-                <Typography fontWeight="bold" marginTop={1}>
-                  {new Date(movie.releaseDate).toDateString()}
+                <Typography color={"#fff"} paddingTop={2}>
+                  {movie.description}
                 </Typography>
               </Box>
             </Box>
@@ -80,7 +81,7 @@ const Booking = () => {
                   display={"flex"}
                   flexDirection={"column"}
                 >
-                  <FormLabel>Seat Number</FormLabel>
+                  <FormLabel sx={{ color: "#fff" }}>Seat Number</FormLabel>
                   <TextField
                     value={inputs.seatNumber}
                     onChange={handleChange}
@@ -89,7 +90,7 @@ const Booking = () => {
                     margin="normal"
                     variant="standard"
                   />
-                  <FormLabel>Booking Date</FormLabel>
+                  <FormLabel sx={{ color: "#fff" }}>Booking Date</FormLabel>
                   <TextField
                     value={inputs.date}
                     onChange={handleChange}
@@ -98,7 +99,19 @@ const Booking = () => {
                     margin="normal"
                     variant="standard"
                   />
-                  <Button type="submit" sx={{ mt: 3 }}>
+                  <Button
+                    type="submit"
+                    sx={{
+                      width: "150px",
+                      margin: "0 auto",
+                      bgcolor: "#c91c55",
+                      color: "#fff",
+                      "&:hover": {
+                        bgcolor: "#d62f66",
+                      },
+                    }}
+                    variant="contained"
+                  >
                     Book Now
                   </Button>
                 </Box>

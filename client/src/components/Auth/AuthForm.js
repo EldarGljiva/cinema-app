@@ -6,10 +6,12 @@ import {
   IconButton,
   TextField,
   Typography,
+  Snackbar,
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { Link } from "react-router-dom";
+import MuiAlert from "@mui/material/Alert";
 
 const AuthForm = ({ onSubmit, isAdmin }) => {
   // State to track whether it's a login or registration form
@@ -37,6 +39,16 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevents the page from refreshing
     onSubmit({ inputs, register: isAdmin ? false : isRegister });
+    setOpenSnackbar(true);
+  };
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
   };
 
   return (
@@ -52,16 +64,15 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
 
       <form onSubmit={handleSubmit}>
         <Box
-          padding={2}
+          padding={5}
           display={"flex"}
           justifyContent={"center"}
           flexDirection="column"
-          width={400}
+          minWidth={400}
           margin="auto"
           alignItems="stretch"
         >
           {!isAdmin && !isLogin && (
-            // Render Name field only for login
             <Box
               sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
             >
@@ -94,10 +105,20 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
           />
 
           <Button
-            sx={{ mt: 2, borderRadius: 10, bgcolor: "pink" }}
+            sx={{
+              mt: 2,
+              borderRadius: 10,
+              bgcolor: isLogin ? "#65c265" : "#f0f0f0",
+              color: isLogin ? "#fff" : "#000",
+              border: isLogin ? "none" : "1px solid #95b9db",
+              ":hover": {
+                bgcolor: isLogin ? "#7cd67c" : "",
+                borderColor: isLogin ? "transparent" : "#6586a6",
+              },
+            }}
             type="submit"
             fullWidth
-            variant="contained"
+            variant={isLogin ? "contained" : "outlined"}
           >
             {isLogin ? "Login" : "Register"}
           </Button>
@@ -114,6 +135,20 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
           )}
         </Box>
       </form>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={4000}
+        onClose={handleSnackbarClose}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleSnackbarClose}
+          severity="success"
+        >
+          Registered Succesfully!
+        </MuiAlert>
+      </Snackbar>
     </Dialog>
   );
 };

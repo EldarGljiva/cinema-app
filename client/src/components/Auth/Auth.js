@@ -17,8 +17,8 @@ const Auth = () => {
       console.log("Received user id:", data.id);
       dispatch(userActions.login());
       localStorage.setItem("userId", data.id);
-      localStorage.setItem("userName", data.name);
-      localStorage.setItem("userEmail", data.email);
+      localStorage.setItem("userName", data.userName);
+      localStorage.setItem("userEmail", data.userEmail);
       navigate("/");
     } else {
       console.error("Invalid response structure. 'id' not found.");

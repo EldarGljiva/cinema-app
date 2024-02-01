@@ -42,7 +42,11 @@ export const register = async (req, res, next) => {
       return res.status(500).json({ message: "Unexpected Error Occurred" });
     }
 
-    return res.status(201).json({ id: savedUser._id });
+    return res.status(201).json({
+      id: savedUser._id,
+      userName: savedUser.name,
+      userEmail: savedUser.email,
+    });
   } catch (err) {
     return next(err);
   }

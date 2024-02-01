@@ -5,9 +5,11 @@ import {
   FormLabel,
   TextField,
   Typography,
+  Snackbar,
 } from "@mui/material";
 import React, { useState } from "react";
 import { addMovie } from "../../api-helpers/api-helpers";
+import MuiAlert from "@mui/material/Alert";
 
 const labelProps = {
   mt: 1,
@@ -23,6 +25,15 @@ const AddMovie = () => {
     featured: false,
   });
 
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+
   const handleChange = (e) => {
     setInputs((prevState) => ({
       ...prevState,
@@ -33,19 +44,21 @@ const AddMovie = () => {
     e.preventDefault();
     console.log(inputs);
     addMovie({ ...inputs }).then((res) => console.log(res));
+    setOpenSnackbar(true);
   };
   return (
-    <div>
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <form onSubmit={handleSubmit}>
         <Box
-          width={"50%"}
-          padding={10}
+          width={"100%"}
+          padding={5}
           display={"flex"}
           flexDirection={"column"}
-          margin={"auto"}
-          boxShadow={"10px 10px 20px #ccc"}
+          margin={4}
+          boxShadow={"10px 10px 20px #8f8f8f"}
+          minWidth={300}
         >
-          <Typography textAlign={"center"} variant="h5">
+          <Typography textAlign={"center"} variant="h5" marginBottom={4}>
             Add New Movie
           </Typography>
           <FormLabel sx={labelProps}>Title</FormLabel>
@@ -83,25 +96,27 @@ const AddMovie = () => {
             variant="standard"
             margin="normal"
           ></TextField>
-          <FormLabel sx={labelProps}>Featured</FormLabel>
-          <Checkbox
-            name="featured"
-            checked={inputs.featured}
-            onClick={(e) =>
-              setInputs((prevState) => ({
-                ...prevState,
-                featured: e.target.checked,
-              }))
-            }
-            sx={{ mr: "auto" }}
-          />
+          <Box marginBottom={2}>
+            <FormLabel sx={labelProps}>Featured</FormLabel>
+            <Checkbox
+              name="featured"
+              checked={inputs.featured}
+              onClick={(e) =>
+                setInputs((prevState) => ({
+                  ...prevState,
+                  featured: e.target.checked,
+                }))
+              }
+              sx={{ mr: "auto" }}
+            />
+          </Box>
           <Button
             type="submit"
             variant="contained"
             sx={{
               margin: "auto",
-              width: "30%",
-              bgcolor: "#2b2d42",
+              width: "50%",
+              bgcolor: "#c91c55",
               ":hover": {
                 bgcolor: "#121227",
               },
@@ -111,6 +126,20 @@ const AddMovie = () => {
           </Button>
         </Box>
       </form>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={4000}
+        onClose={handleSnackbarClose}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleSnackbarClose}
+          severity="success"
+        >
+          Movie successfully added!
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 };

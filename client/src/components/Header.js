@@ -36,18 +36,26 @@ const Header = () => {
       navigate(`/booking/${movie._id}`);
     }
   };
+
   return (
-    <AppBar position="sticky" sx={{ bgcolor: "#232946" }}>
+    <AppBar position="sticky" sx={{ bgcolor: "#2e2b2d" }}>
       <Toolbar>
+        <Link to="/">
+          <img src="/popcorn.png" alt="logo" width="60px" height="50px" />
+        </Link>
         <Box width={"50%"} margin={"auto"} padding={2}>
           <Autocomplete
+            sx={{ bgcolor: "#171717" }}
             onChange={handleChange}
             id="free-solo-demo"
             freeSolo
             options={movies && movies.map((option) => option.title)}
             renderInput={(params) => (
               <TextField
-                sx={{ input: { color: "white" } }}
+                sx={{
+                  input: { color: "white" },
+                  "& .MuiInputLabel-root": { color: "#666" },
+                }}
                 {...params}
                 label="Search a Movie"
               />
@@ -66,7 +74,7 @@ const Header = () => {
             {!isAdminLoggedIn && !isUserLoggedIn && (
               <>
                 <Tab LinkComponent={Link} to="/admin" label="Admin" />
-                <Tab LinkComponent={Link} to="/auth" label="Auth" />
+                <Tab LinkComponent={Link} to="/auth" label="Login" />
               </>
             )}
             {isUserLoggedIn && (
@@ -83,7 +91,6 @@ const Header = () => {
             {isAdminLoggedIn && (
               <>
                 <Tab LinkComponent={Link} to="/add_movie" label="Add Movie" />
-                <Tab LinkComponent={Link} to="/admin_profile" label="Profile" />
                 <Tab
                   onClick={() => logout(true)}
                   LinkComponent={Link}

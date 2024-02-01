@@ -11,14 +11,13 @@ const Movies = () => {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <Box margin={"auto"} marginTop={4}>
-      <Typography variant="h4" padding={2} textAlign="center">
+    <Box margin={"auto"} bgcolor={"#232122"}>
+      <Typography variant="h4" padding={2} textAlign="center" color={"#e07b9c"}>
         All Movies
       </Typography>
       <Box
         marginTop={5}
         width={"100%"}
-        margin="auto"
         display={"flex"}
         justifyContent={"flex-start"}
         flexWrap={"wrap"}

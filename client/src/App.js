@@ -10,7 +10,6 @@ import { adminActions, userActions } from "./store";
 import Booking from "./components/Bookings/Booking";
 import UserProfile from "./components/Profile/UserProfile.js";
 import AddMovie from "./components/Movies/AddMovie.js";
-import AdminProfile from "./components/Profile/AdminProfile.js";
 
 function App() {
   const dispatch = useDispatch();
@@ -48,7 +47,6 @@ function App() {
           {isAdminLoggedIn && !isUserLoggedIn && (
             <>
               <Route path="/add_movie" element={<AddMovie />} />
-              <Route path="/user-admin" element={<AdminProfile />} />
             </>
           )}
         </Routes>
