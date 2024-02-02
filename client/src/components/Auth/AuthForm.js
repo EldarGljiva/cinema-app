@@ -14,6 +14,22 @@ import { Link } from "react-router-dom";
 import MuiAlert from "@mui/material/Alert";
 
 const AuthForm = ({ onSubmit, isAdmin }) => {
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+  const handleErrorSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenErrorSnackbar(false);
+  };
+
   // State to track whether it's a login or registration form
   const [isLogin, setIsLogin] = useState(true);
   // State to store form input values
@@ -38,17 +54,19 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevents the page from refreshing
-    onSubmit({ inputs, register: isAdmin ? false : isRegister });
-    setOpenSnackbar(true);
-  };
-
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === "clickaway") {
+    if (
+      (isLogin && !inputs.email) ||
+      !inputs.password ||
+      (!isLogin && !inputs.name) ||
+      !inputs.email ||
+      !inputs.password
+    ) {
+      console.log("Doesnt exist");
+      setOpenErrorSnackbar(true);
       return;
     }
-    setOpenSnackbar(false);
+    onSubmit({ inputs, register: isAdmin ? false : isRegister });
+    setOpenSnackbar(true);
   };
 
   return (
@@ -146,7 +164,21 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
           onClose={handleSnackbarClose}
           severity="success"
         >
-          Registered Succesfully!
+          {isLogin ? "Logged In Succesfully" : "Registered Succesfully!"}
+        </MuiAlert>
+      </Snackbar>
+      <Snackbar
+        open={openErrorSnackbar}
+        autoHideDuration={4000}
+        onClose={handleErrorSnackbarClose}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleErrorSnackbarClose}
+          severity="error"
+        >
+          Missing Input Fields
         </MuiAlert>
       </Snackbar>
     </Dialog>

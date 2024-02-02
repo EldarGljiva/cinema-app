@@ -8,10 +8,21 @@ import {
   Typography,
   ListItemText,
   IconButton,
+  Snackbar,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import MuiAlert from "@mui/material/Alert";
 
 const UserProfile = () => {
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
@@ -30,6 +41,7 @@ const UserProfile = () => {
     deleteBooking(id)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+    setOpenSnackbar(true);
   };
 
   return (
@@ -105,6 +117,20 @@ const UserProfile = () => {
           </List>
         </Box>
       </Box>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={4000}
+        onClose={handleSnackbarClose}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleSnackbarClose}
+          severity="success"
+        >
+          Movie successfully added!
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 };

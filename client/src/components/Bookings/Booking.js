@@ -2,9 +2,25 @@ import React, { useEffect, useState, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { getMovieDetails, newBooking } from "../../api-helpers/api-helpers";
 import Typography from "@mui/material/Typography";
-import { Box, Button, FormLabel, TextField } from "@mui/material";
+import { Box, Button, FormLabel, TextField, Snackbar } from "@mui/material";
+import MuiAlert from "@mui/material/Alert";
 
 const Booking = () => {
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+  const handleErrorSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenErrorSnackbar(false);
+  };
   // State to store the movie details
   const [movie, setMovie] = useState();
   const [inputs, setInputs] = useState({ seatNumber: "", date: "" });
@@ -32,9 +48,16 @@ const Booking = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(inputs);
+
+    if (!inputs.seatNumber || !inputs.date) {
+      setOpenErrorSnackbar(true);
+      return;
+    }
+
     newBooking({ ...inputs, movie: movie._id })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+    setOpenSnackbar(true);
   };
   // If id changes run useEffect
   console.log(movie);
@@ -83,6 +106,9 @@ const Booking = () => {
                 >
                   <FormLabel sx={{ color: "#fff" }}>Seat Number</FormLabel>
                   <TextField
+                    InputProps={{
+                      style: { color: "#666" },
+                    }}
                     value={inputs.seatNumber}
                     onChange={handleChange}
                     name="seatNumber"
@@ -92,6 +118,9 @@ const Booking = () => {
                   />
                   <FormLabel sx={{ color: "#fff" }}>Booking Date</FormLabel>
                   <TextField
+                    InputProps={{
+                      style: { color: "#666" },
+                    }}
                     value={inputs.date}
                     onChange={handleChange}
                     name="date"
@@ -120,6 +149,35 @@ const Booking = () => {
           </Box>
         </Fragment>
       )}
+      <Snackbar
+        open={openErrorSnackbar}
+        autoHideDuration={4000}
+        onClose={handleErrorSnackbarClose}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleErrorSnackbarClose}
+          severity="error"
+        >
+          Missing Input Fields
+        </MuiAlert>
+      </Snackbar>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={4000}
+        onClose={handleSnackbarClose}
+      >
+        <MuiAlert
+          elevation={6}
+          variant="filled"
+          onClose={handleSnackbarClose}
+          severity="success"
+        >
+          Movie successfully added!
+        </MuiAlert>
+      </Snackbar>
     </div>
   );
 };
