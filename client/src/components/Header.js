@@ -12,6 +12,7 @@ import { getAllMovies } from "../api-helpers/api-helpers";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { adminActions, userActions } from "../store";
+import "./Header.css";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ const Header = () => {
           <Tabs
             value={value}
             textColor="inherit"
-            indicatorColor="secondary"
+            className="custom-tabs"
             onChange={(e, val) => setValue(val)}
           >
             <Tab LinkComponent={Link} to="/" label="Home" />
