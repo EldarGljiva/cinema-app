@@ -1,10 +1,21 @@
+.MuiBox-root {
+  margin: 0;
+  padding: 0;
+}
+.css-1hsrr6m {
+  margin: 0;
+  padding: 0 !important;
+}
 .carousel {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 850px;
-  height: 700px;
+  width: 60%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  margin-top: 15px;
 }
 
 .slide {

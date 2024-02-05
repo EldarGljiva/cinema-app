@@ -6,6 +6,9 @@ import {
   TextField,
   Tabs,
   Tab,
+  IconButton,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { getAllMovies } from "../api-helpers/api-helpers";
@@ -13,6 +16,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { adminActions, userActions } from "../store";
 import "./Header.css";
+import MenuIcon from "@mui/icons-material/Menu";
+import Drawer from "@mui/material/Drawer";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -37,13 +42,24 @@ const Header = () => {
       navigate(`/booking/${movie._id}`);
     }
   };
+  const [menuAnchor, setMenuAnchor] = useState(null);
+
+  const handleMenuOpen = (event) => {
+    setMenuAnchor(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchor(null);
+  };
 
   return (
     <AppBar position="sticky" sx={{ bgcolor: "#2e2b2d" }}>
       <Toolbar>
-        <Link to="/">
-          <img src="/popcorn.png" alt="logo" width="60px" height="50px" />
-        </Link>
+        <Box width={"20%"}>
+          <Link to="/">
+            <img src="/popcorn.png" alt="logo" width="60px" height="50px" />
+          </Link>
+        </Box>
         <Box width={"50%"} margin={"auto"} padding={2}>
           <Autocomplete
             sx={{ bgcolor: "#171717" }}
@@ -63,7 +79,7 @@ const Header = () => {
             )}
           />
         </Box>
-        <Box display={"flex"}>
+        <Box sx={{ display: { xs: "none", sm: "flex" } }}>
           <Tabs
             value={value}
             textColor="inherit"
@@ -102,6 +118,121 @@ const Header = () => {
             )}
           </Tabs>
         </Box>
+        <Box sx={{ display: { xs: "flex", sm: "none" } }}>
+          <IconButton onClick={handleMenuOpen} sx={{ color: "white" }}>
+            <MenuIcon />
+          </IconButton>
+        </Box>
+        <Menu
+          anchorEl={menuAnchor}
+          open={Boolean(menuAnchor)}
+          onClose={handleMenuClose}
+          sx={{ marginTop: 4 }}
+        >
+          <MenuItem
+            component={Link}
+            to="/"
+            selected={value === 0}
+            onClick={() => {
+              setValue(0);
+              handleMenuClose();
+            }}
+          >
+            Home
+          </MenuItem>
+          <MenuItem
+            component={Link}
+            to="/movies"
+            selected={value === 0}
+            onClick={() => {
+              setValue(0);
+              handleMenuClose();
+            }}
+          >
+            Movies
+          </MenuItem>
+
+          {!isAdminLoggedIn && !isUserLoggedIn && (
+            <>
+              <MenuItem
+                component={Link}
+                to="/admin"
+                selected={value === 0}
+                onClick={() => {
+                  setValue(0);
+                  handleMenuClose();
+                }}
+              >
+                Admin
+              </MenuItem>
+
+              <MenuItem
+                component={Link}
+                to="/auth"
+                selected={value === 0}
+                onClick={() => {
+                  setValue(0);
+                  handleMenuClose();
+                }}
+              >
+                Login
+              </MenuItem>
+            </>
+          )}
+
+          {isUserLoggedIn && (
+            <>
+              <MenuItem
+                component={Link}
+                to="/user"
+                selected={value === 0}
+                onClick={() => {
+                  setValue(0);
+                  handleMenuClose();
+                }}
+              >
+                Profile
+              </MenuItem>
+              <MenuItem
+                component={Link}
+                to="/"
+                selected={value === 0}
+                onClick={() => {
+                  setValue(0);
+                  handleMenuClose();
+                }}
+              >
+                Logout
+              </MenuItem>
+            </>
+          )}
+          {isAdminLoggedIn && (
+            <>
+              <MenuItem
+                component={Link}
+                to="/add_movie"
+                selected={value === 0}
+                onClick={() => {
+                  setValue(0);
+                  handleMenuClose();
+                }}
+              >
+                Add Movie
+              </MenuItem>
+              <MenuItem
+                component={Link}
+                to="/"
+                selected={value === 0}
+                onClick={() => {
+                  setValue(0);
+                  handleMenuClose();
+                }}
+              >
+                Logout
+              </MenuItem>
+            </>
+          )}
+        </Menu>
       </Toolbar>
     </AppBar>
   );

@@ -11,7 +11,7 @@ const Movies = () => {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <Box margin={"auto"} bgcolor={"#232122"}>
+    <Box margin={"auto"} minHeight="100vh" width="100%" bgcolor={"#232122"}>
       <Typography variant="h4" padding={2} textAlign="center" color={"#e07b9c"}>
         All Movies
       </Typography>

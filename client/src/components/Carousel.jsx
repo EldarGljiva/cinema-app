@@ -17,13 +17,13 @@ export const Carousel = ({ data }) => {
   return (
     <div className="carousel">
       <BsArrowLeftCircleFill onClick={prevSlide} className="arrow arrow-left" />
-      {data.map((item, idx) => {
+      {data.map((item, index) => {
         return (
           <img
             src={item.src}
             alt={item.alt}
-            key={idx}
-            className={slide === idx ? "slide" : "slide slide-hidden"}
+            key={index}
+            className={slide === index ? "slide" : "slide slide-hidden"}
           />
         );
       })}
@@ -32,14 +32,14 @@ export const Carousel = ({ data }) => {
         className="arrow arrow-right"
       />
       <span className="indicators">
-        {data.map((_, idx) => {
+        {data.map((_, index) => {
           return (
             <button
-              key={idx}
+              key={index}
               className={
-                slide === idx ? "indicator" : "indicator indicator-inactive"
+                slide === index ? "indicator" : "indicator indicator-inactive"
               }
-              onClick={() => setSlide(idx)}
+              onClick={() => setSlide(index)}
             ></button>
           );
         })}
