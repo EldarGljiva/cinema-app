@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-
-// from other folders/files
+// Importing the database connection configuration
 import db from "../config/db.js";
 
+// Defining admin schema
 const adminSchema = new mongoose.Schema({
   email: {
     type: String,
@@ -17,6 +17,7 @@ const adminSchema = new mongoose.Schema({
   addedMovies: [{ type: mongoose.Types.ObjectId, ref: "Movie" }],
 });
 
+// Creating Admin model from the defined schema
 const Admin = mongoose.model("Admin", adminSchema);
 
 export default Admin;

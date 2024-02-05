@@ -4,7 +4,6 @@ import {
   getMovieById,
   getMovies,
 } from "../controllers/movie-controller.js";
-// From other folders/files
 
 const router = express.Router();
 

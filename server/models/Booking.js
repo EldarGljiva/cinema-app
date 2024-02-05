@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
-
-// from other folders/files
 import db from "../config/db.js";
 
+// Defining booking schema
 const bookingSchema = new mongoose.Schema({
   movie: {
     type: mongoose.Types.ObjectId,
@@ -24,6 +23,7 @@ const bookingSchema = new mongoose.Schema({
   },
 });
 
+// Creating Booking model from the defined schema
 const Booking = mongoose.model("Booking", bookingSchema);
 
 export default Booking;

@@ -1,5 +1,4 @@
 import express from "express";
-// From other folders/files
 import {
   newBooking,
   getBookingById,

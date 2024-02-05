@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
-
-// from other folders/files
 import db from "../config/db.js";
 
+// Defining movie schema
 const movieSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -28,5 +27,7 @@ const movieSchema = new mongoose.Schema({
   admin: { type: mongoose.Types.ObjectId, ref: "Admin", required: true },
 });
 
+// Creating Movie model from the defined schema
 const Movie = mongoose.model("Movie", movieSchema);
+
 export default Movie;

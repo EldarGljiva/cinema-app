@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
-
-// from other folders/files
 import db from "../config/db.js";
 
+// Defining user schema
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -21,5 +20,7 @@ const userSchema = new mongoose.Schema({
   bookings: [{ type: mongoose.Types.ObjectId, ref: "Booking" }],
 });
 
+// Creating User model from the defined schema
 const User = mongoose.model("User", userSchema);
+
 export default User;

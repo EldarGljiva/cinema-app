@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 dotenv.config();
-// From other folders/files
 import app from "./app.js";
 
 // Port
